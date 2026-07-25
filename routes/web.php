@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PropertyController;
 
 Route::inertia('/', 'Welcome')->name('home');
 
@@ -31,5 +32,9 @@ Route::get('/courses', [CourseController::class, 'index'])->name('courses');
 //route contact
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+//route properties
+Route::get('/property', [PropertyController::class, 'index'])->name('property');
+Route::post('/property', [PropertyController::class, 'store'])->name('property.store');
 
 require __DIR__ . '/settings.php';

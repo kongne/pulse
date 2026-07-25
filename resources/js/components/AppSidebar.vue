@@ -53,6 +53,11 @@ const mainNavItems = computed<NavItem[]>(() => [
         href: '/contact',
         icon: Phone,
     },
+    {
+        title: 'Property',
+        href: '/property',
+        icon: Phone,
+    },
 ]);
 
 const footerNavItems: NavItem[] = [
