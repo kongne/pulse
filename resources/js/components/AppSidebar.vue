@@ -7,6 +7,7 @@ import {
     Info,
     Book,
     Phone,
+    Home,
 } from '@lucide/vue';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
@@ -54,9 +55,9 @@ const mainNavItems = computed<NavItem[]>(() => [
         icon: Phone,
     },
     {
-        title: 'Property',
+        title: 'Properties',
         href: '/property',
-        icon: Phone,
+        icon: Home,
     },
 ]);
 

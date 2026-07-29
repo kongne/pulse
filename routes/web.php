@@ -34,7 +34,12 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 //route properties
-Route::get('/property', [PropertyController::class, 'index'])->name('property');
-Route::post('/property', [PropertyController::class, 'store'])->name('property.store');
+Route::resource('property', PropertyController::class)->only(['index', 'store', 'update', 'destroy'])->names([
+    'index' => 'property.index',
+    'store' => 'property.store',
+    'update' => 'property.update',
+    'destroy' => 'property.destroy',
+]);
+//Route::post('/property', [PropertyController::class, 'store'])->name('property.store');
 
 require __DIR__ . '/settings.php';
