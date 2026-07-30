@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Loader } from 'lucide-vue-next';
+import { dashboard } from '@/routes';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Form, Head, Link, router } from '@inertiajs/vue3';
@@ -76,12 +77,22 @@ const changePerPage = () => {
     );
 };
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Properties',
-        href: index.url(),
-    },
-];
+defineOptions({
+    layout: (props: { currentTeam?: Team | null }) => ({
+        breadcrumbs: [
+            {
+                title: 'Dashboard',
+                href: props.currentTeam
+                    ? dashboard(props.currentTeam.slug)
+                    : '/',
+            },
+            {
+                title: 'Property Management',
+                href: index.url(),
+            },
+        ],
+    }),
+});
 
 const items = computed(() => props.properties?.data ?? []);
 
@@ -143,7 +154,7 @@ const closeAll = () => {
                     <select
                         v-model="perPage"
                         @change="changePerPage"
-                        class="rounded-md border px-2 py-1"
+                        class="rounded-md border px-2 py-1 text-black dark:text-gray-500"
                     >
                         <option :value="5">5</option>
                         <option :value="10">10</option>
@@ -155,17 +166,19 @@ const closeAll = () => {
 
                     <span class="text-sm">entries</span>
                 </div>
-                <p class="text-sm text-muted-foreground">
-                    Showing {{ props.properties.from }} to
-                    {{ props.properties.to }} of
-                    {{ props.properties.total }} entries
-                </p>
-            </div>
-            <div class="flex items-center justify-between">
-                <CardTitle>Properties</CardTitle>
                 <Button size="sm" @click="createOpen = true">
                     Add location
                 </Button>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <CardTitle
+                    ><p class="mt-1 text-sm text-muted-foreground">
+                        Showing {{ props.properties.from }} to
+                        {{ props.properties.to }} of
+                        {{ props.properties.total }} entries
+                    </p></CardTitle
+                >
             </div>
         </CardHeader>
         <CardContent>
@@ -207,7 +220,7 @@ const closeAll = () => {
                                     v-if="imageUrl(properties.image)"
                                     :src="imageUrl(properties.image)"
                                     alt="Property image"
-                                    class="h-14 w-20 rounded border bg-muted"
+                                    class="h-15 w-25 rounded border bg-muted"
                                 />
                             </td>
                             <td class="px-3 py-2 text-sm">
@@ -527,7 +540,7 @@ const closeAll = () => {
                         type="submit"
                         variant="destructive"
                         :disabled="processing"
-                        class="bg-red-500 hover:text-blue-500"
+                        class="bg-danger hover:text-blue-500"
                     >
                         Delete
                     </Button>

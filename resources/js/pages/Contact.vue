@@ -35,6 +35,12 @@ defineOptions({
     layout: (props: { currentTeam?: Team | null }) => ({
         breadcrumbs: [
             {
+                title: 'Dashboard',
+                href: props.currentTeam
+                    ? dashboard(props.currentTeam.slug)
+                    : '/',
+            },
+            {
                 title: 'Contact',
                 href: props.currentTeam
                     ? dashboard(props.currentTeam.slug)
