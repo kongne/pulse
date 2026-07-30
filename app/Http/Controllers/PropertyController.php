@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Storage;
 class PropertyController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $properties = Property::latest()->paginate(5);
-        return Inertia::render('Property/index', ['properties' => $properties]);
+        $perPage = $request->integer('per_page', 5);
+
+        $properties = Property::latest()->paginate($perPage);
+        return Inertia::render('Property/index', ['properties' => $properties, 'filters' => ['per_page' => $perPage]]);
     }
 
     public function store(Request $request)

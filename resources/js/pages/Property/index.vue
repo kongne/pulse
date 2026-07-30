@@ -2,7 +2,7 @@
 import { Loader } from 'lucide-vue-next';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Form, Head, Link } from '@inertiajs/vue3';
+import { Form, Head, Link, router } from '@inertiajs/vue3';
 import {
     Card,
     CardHeader,
@@ -46,16 +46,35 @@ interface Props {
     properties: {
         data: Property[];
         links: PaginationLink[];
+
         current_page: number;
         last_page: number;
         per_page: number;
+
         total: number;
         from: number | null;
         to: number | null;
     };
+    filters: {
+        per_page: number;
+    };
 }
 
 const props = defineProps<Props>();
+
+const perPage = ref(props.filters.per_page ?? 5);
+const changePerPage = () => {
+    router.get(
+        index.url(),
+        {
+            per_page: perPage.value,
+        },
+        {
+            preserveState: true,
+            preserveScroll: true,
+        },
+    );
+};
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -117,6 +136,31 @@ const closeAll = () => {
     <Head title="Properties" />
     <Card class="m-4 overflow-hidden">
         <CardHeader>
+            <div class="mb-4 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="text-sm">Show</span>
+
+                    <select
+                        v-model="perPage"
+                        @change="changePerPage"
+                        class="rounded-md border px-2 py-1"
+                    >
+                        <option :value="5">5</option>
+                        <option :value="10">10</option>
+                        <option :value="15">15</option>
+                        <option :value="25">25</option>
+                        <option :value="50">50</option>
+                        <option :value="100">100</option>
+                    </select>
+
+                    <span class="text-sm">entries</span>
+                </div>
+                <p class="text-sm text-muted-foreground">
+                    Showing {{ props.properties.from }} to
+                    {{ props.properties.to }} of
+                    {{ props.properties.total }} entries
+                </p>
+            </div>
             <div class="flex items-center justify-between">
                 <CardTitle>Properties</CardTitle>
                 <Button size="sm" @click="createOpen = true">
