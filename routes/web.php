@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\CategoryController;
 
 Route::inertia('/', 'Welcome')->name('home');
 
@@ -41,5 +42,13 @@ Route::resource('property', PropertyController::class)->only(['index', 'store', 
     'destroy' => 'property.destroy',
 ]);
 //Route::post('/property', [PropertyController::class, 'store'])->name('property.store');
+//category route
+
+Route::resource('category', CategoryController::class)->only(['index', 'store', 'update', 'destroy'])->names([
+    'index' => 'category.index',
+    'store' => 'category.store',
+    'update' => 'category.update',
+    'destroy' => 'category.destroy',
+]);
 
 require __DIR__ . '/settings.php';
