@@ -20,7 +20,7 @@ class PropertyController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'location' => 'required|string|max:255',
+            'location' => 'required|string|max:10000',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
             'price' => 'nullable|numeric',
@@ -41,7 +41,7 @@ class PropertyController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'location' => 'required|string|max:255',
+            'location' => 'required|string|max:10000',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
             'price' => 'nullable|numeric',

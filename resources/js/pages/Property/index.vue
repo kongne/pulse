@@ -84,7 +84,7 @@ const openDelete = (property: Property) => {
 const imageUrl = (path?: string | null) => {
     if (!path) return null;
 
-    return storageLocal(path);
+    return storageLocal(path).url;
 };
 
 const decodeEntities = (str: string) => {
@@ -145,7 +145,9 @@ const closeAll = () => {
                                 Description
                             </th>
 
-                            <th class="px-3 py-2 text-sm text-muted-foreground">
+                            <th
+                                class="col-span-2 px-3 py-2 text-sm text-muted-foreground"
+                            >
                                 Actions
                             </th>
                         </tr>
@@ -481,6 +483,7 @@ const closeAll = () => {
                         type="submit"
                         variant="destructive"
                         :disabled="processing"
+                        class="bg-red-500 hover:text-blue-500"
                     >
                         Delete
                     </Button>

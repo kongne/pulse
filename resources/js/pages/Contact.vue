@@ -96,6 +96,7 @@ defineOptions({
                                 type="email"
                                 autocomplete="email"
                                 required
+                                autofocus
                                 :aria-invalid="!!errors?.email"
                             />
 
