@@ -25,7 +25,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
-import { index, update, destroy, store } from '@/routes/property';
+import { index, update, destroy, store } from '@/routes/category';
 import { local as storageLocal } from '@/routes/storage';
 import { ref, computed } from 'vue';
 
@@ -96,7 +96,7 @@ const editOpen = ref(false);
 const deleteOpen = ref(false);
 const createOpen = ref(false);
 const selected = ref<Category | null>(null);
-const newLocation = ref('');
+const newName = ref('');
 
 const openEdit = (category: Category) => {
     selected.value = category;
@@ -288,7 +288,7 @@ const closeAll = () => {
                             enctype="multipart/form-data"
                             reset-on-error
                             @success="
-                                {
+                                () => {
                                     createOpen = false;
 
                                     newName.value = '';
@@ -304,6 +304,7 @@ const closeAll = () => {
                                     id="name"
                                     name="name"
                                     type="text"
+                                    v-model="newName"
                                     required
                                 />
 
@@ -350,7 +351,7 @@ const closeAll = () => {
                             v-slot="{ processing }"
                         >
                             <p class="mb-4 text-sm text-muted-foreground">
-                                Are you sure you want to delete this items
+                                Are you sure you want to delete this item
 
                                 <span class="font-medium text-foreground">{{
                                     selected?.name
@@ -361,7 +362,7 @@ const closeAll = () => {
                             <DialogFooter>
                                 <Button
                                     type="button"
-                                    variant="outline"
+                                    variant="destructive"
                                     @click="deleteOpen = false"
                                     :disabled="processing"
                                     >Cancel</Button

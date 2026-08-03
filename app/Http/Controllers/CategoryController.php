@@ -19,12 +19,12 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|string|max:555',
 
         ]);
 
-        Category::create($validated);
+        Category::create($validatedData);
 
         return redirect()->route('category.index')->with('success', 'Category created successfully');
     }
@@ -43,6 +43,8 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
+
+        $category->delete();
 
         return redirect()->route('category.index')->with('success', 'Category deleted successfully');
     }

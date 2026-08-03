@@ -258,7 +258,7 @@ const closeAll = () => {
                                     >
                                     <Button
                                         size="sm"
-                                        variant="outline"
+                                        variant="destructive"
                                         @click="openDelete(properties)"
                                         >Delete</Button
                                     >
