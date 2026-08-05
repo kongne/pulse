@@ -65,6 +65,11 @@ const mainNavItems = computed<NavItem[]>(() => [
         href: '/category',
         icon: Library,
     },
+    {
+        title: 'Books',
+        href: '/book',
+        icon: BookOpen,
+    },
 ]);
 
 const footerNavItems: NavItem[] = [

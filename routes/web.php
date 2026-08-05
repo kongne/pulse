@@ -9,6 +9,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BookController;
 
 Route::inertia('/', 'Welcome')->name('home');
 
@@ -51,4 +52,11 @@ Route::resource('category', CategoryController::class)->only(['index', 'store', 
     'destroy' => 'category.destroy',
 ]);
 
+//route books
+Route::resource('book', BookController::class)->only(['index', 'store', 'update', 'destroy'])->names([
+    'index' => 'book.index',
+    'store' => 'book.store',
+    'update' => 'book.update',
+    'destroy' => 'book.destroy',
+]);
 require __DIR__ . '/settings.php';
