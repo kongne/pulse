@@ -205,7 +205,7 @@ const imageUrl = (path?: string | null) => {
                             :key="book.id"
                             class="border-b"
                         >
-                            <td class="px-3 py-3">
+                            <td class="px-3 py-2">
                                 <img
                                     v-if="imageUrl(book.cover_image)"
                                     :src="imageUrl(book.cover_image)"
@@ -217,15 +217,15 @@ const imageUrl = (path?: string | null) => {
                                     class="flex h-16 w-16 items-center justify-center rounded border bg-muted"
                                 ></div>
                             </td>
-                            <td class="px-3 py-3">{{ book.title }}</td>
-                            <td class="px-3 py-3">{{ book.author }}</td>
-                            <td class="px-3 py-3">
+                            <td class="px-3 py-2">{{ book.title }}</td>
+                            <td class="px-3 py-2">{{ book.author }}</td>
+                            <td class="px-3 py-2">
                                 <span
                                     class="inline-block rounded bg-blue-500 px-2 py-1 text-xs font-medium text-white"
                                     >{{ book.category?.name || '' }}</span
                                 >
                             </td>
-                            <td class="px-3 py-3">
+                            <td class="px-3 py-2">
                                 {{
                                     Number(book.price).toLocaleString(
                                         undefined,
@@ -236,7 +236,7 @@ const imageUrl = (path?: string | null) => {
                                     )
                                 }}
                             </td>
-                            <td class="px-3 py-3">
+                            <td class="px-3 py-2">
                                 <div class="flex gap-2">
                                     <Button
                                         size="sm"
