@@ -10,6 +10,9 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\ListController;
+
 
 Route::inertia('/', 'Welcome')->name('home');
 
@@ -59,4 +62,24 @@ Route::resource('book', BookController::class)->only(['index', 'store', 'update'
     'update' => 'book.update',
     'destroy' => 'book.destroy',
 ]);
+
+//route lists
+
+Route::resource('lists', ListController::class)->only(['index', 'store', 'update', 'destroy'])->names([
+    'index' => 'lists.index',
+    'store' => 'lists.store',
+    'update' => 'lists.update',
+    'destroy' => 'lists.destroy',
+]);
+
+//route tasks
+Route::resource('tasks', TaskController::class)->only(['index', 'store', 'update', 'destroy'])->names([
+    'index' => 'tasks.index',
+    'store' => 'tasks.store',
+    'update' => 'tasks.update',
+    'destroy' => 'tasks.destroy',
+]);
+
+
+
 require __DIR__ . '/settings.php';
