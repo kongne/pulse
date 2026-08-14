@@ -297,7 +297,7 @@ const closeAll = () => {
             <DialogHeader>
                 <DialogTitle>Edit Property</DialogTitle>
                 <DialogDescription
-                    >Update whatsoeve you wish and the result will be
+                    >Update whatsoever you wish and the result will be
                     spontaneous</DialogDescription
                 >
             </DialogHeader>
