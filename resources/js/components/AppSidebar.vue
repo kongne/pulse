@@ -79,7 +79,7 @@ const mainNavItems = computed<NavItem[]>(() => [
     },
     {
         title: 'Tasks',
-        href: '/checklists',
+        href: '/tasks',
         icon: CheckSquare,
     },
 ]);

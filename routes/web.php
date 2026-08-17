@@ -73,12 +73,15 @@ Route::resource('lists', ListController::class)->only(['index', 'store', 'update
 ]);
 
 //route tasks
-Route::resource('tasks', TaskController::class)->only(['index', 'store', 'update', 'destroy'])->names([
+Route::resource('tasks', TaskController::class)->only(['index', 'update', 'destroy'])->names([
     'index' => 'tasks.index',
-    'store' => 'tasks.store',
     'update' => 'tasks.update',
     'destroy' => 'tasks.destroy',
 ]);
+
+Route::post('/lists/tasks', [TaskController::class, 'store'])
+    ->name('lists.tasks.store');
+
 
 
 
