@@ -43,7 +43,7 @@ const mainNavItems = computed<NavItem[]>(() => [
         icon: LayoutGrid,
     },
     {
-        title: 'About',
+        title: 'Overview',
         href: '/about',
         icon: Info,
     },
