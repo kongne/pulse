@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 import { dashboard } from '@/routes';
+
 import { index, update, destroy, store } from '@/routes/lists';
 
 import { local as storageLocal } from '@/routes/storage';
@@ -132,7 +133,7 @@ const getPriorityClass = (priority: Task['priority']) => {
 
         <div>
             <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">
-                Dashboard
+                Overview
             </h1>
 
             <p class="mt-1 text-sm text-muted-foreground sm:text-base">
@@ -446,6 +447,9 @@ const getPriorityClass = (priority: Task['priority']) => {
                         <p>No recent tasks yet.</p>
 
                         <p class="mt-1">Your latest tasks will appear here.</p>
+                        <Link href="/tasks" class="mt-4">
+                            <Button size="sm"> Create task </Button>
+                        </Link>
                     </div>
                 </CardContent>
             </Card>

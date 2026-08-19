@@ -225,16 +225,15 @@ Route::middleware([
     Route::resource('tasks', TaskController::class)
         ->only([
             'index',
-            'store',
             'update',
             'destroy',
         ])
         ->names([
             'index'   => 'tasks.index',
-            'store'   => 'tasks.store',
             'update'  => 'tasks.update',
             'destroy' => 'tasks.destroy',
         ]);
+    Route::post('/lists/tasks', [TaskController::class, 'store'])->name('tasks.store');
 });
 
 /*
