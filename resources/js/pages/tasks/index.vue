@@ -620,12 +620,17 @@ const changePerPage = () => {
                 <CardTitle
                     class="flex flex-col gap-3 text-lg sm:flex-row sm:items-center sm:justify-between sm:text-xl"
                 >
-                    <!-- Title -->
-                    <div class="flex flex-wrap items-center gap-1">
-                        <span>Tasks</span>
+                    <!-- Title + count -->
+                    <div class="flex min-w-0 flex-wrap items-center gap-2">
+                        <span class="font-semibold"> Tasks </span>
 
                         <span class="text-sm font-normal text-muted-foreground">
-                            ({{ tasks.data.length }} of {{ tasks.total }})
+                            <template v-if="tasks.total > 0">
+                                Showing {{ tasks.from }}–{{ tasks.to }} of
+                                {{ tasks.total }}
+                            </template>
+
+                            <template v-else> No tasks </template>
                         </span>
                     </div>
 
@@ -633,15 +638,20 @@ const changePerPage = () => {
                     <div
                         class="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center"
                     >
-                        <div class="flex items-center gap-2">
-                            <span class="text-sm whitespace-nowrap">
+                        <!-- Per page -->
+                        <div
+                            class="flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-start"
+                        >
+                            <span
+                                class="text-sm whitespace-nowrap text-muted-foreground"
+                            >
                                 Show
                             </span>
 
                             <select
                                 v-model="perPage"
                                 @change="changePerPage"
-                                class="h-9 rounded-md border border-input bg-background px-2 text-sm text-foreground focus:ring-2 focus:ring-ring focus:outline-none"
+                                class="h-9 min-w-[64px] rounded-md border border-input bg-background px-2 text-sm text-foreground shadow-sm transition-colors focus:ring-2 focus:ring-ring focus:outline-none"
                             >
                                 <option :value="5">5</option>
                                 <option :value="10">10</option>
@@ -651,11 +661,14 @@ const changePerPage = () => {
                                 <option :value="100">100</option>
                             </select>
 
-                            <span class="text-sm whitespace-nowrap">
+                            <span
+                                class="text-sm whitespace-nowrap text-muted-foreground"
+                            >
                                 entries
                             </span>
                         </div>
 
+                        <!-- Export -->
                         <ExportDropdown
                             url="/tasks/export"
                             :filters="filters"
