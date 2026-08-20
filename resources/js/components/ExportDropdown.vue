@@ -48,12 +48,6 @@ const formats: ExportFormat[] = [
         description: 'Printable report',
         icon: 'PDF',
     },
-    {
-        key: 'xml',
-        label: 'XML',
-        description: 'Structured data',
-        icon: 'XML',
-    },
 ];
 
 const buildExportUrl = (format: string): string => {
