@@ -13,6 +13,8 @@ class TaskController extends Controller
 {
     public function index(Request $request): Response
     {
+        $perPage = $request->integer('per_page', 5);
+
         $query = Task::query()->with('list:id,name,color');
 
         if ($request->filled('search')) {
@@ -29,10 +31,11 @@ class TaskController extends Controller
             $query->where('list_id', $request->list_id);
         }
 
-        $tasks = $query->latest()->paginate(10)->withQueryString();
+        $tasks = $query->latest()->paginate($perPage)->withQueryString();
+
         $lists = TodoList::query()->select(['id', 'name', 'color', 'created_at'])->withCount('tasks')->latest()->get();
 
-        return Inertia::render('tasks/index', ['tasks' => $tasks, 'lists' => $lists, 'filters' => $request->only(['search', 'priority', 'list_id'])]);
+        return Inertia::render('tasks/index', ['tasks' => $tasks, 'filters' => ['per_page' => $perPage], 'lists' => $lists, 'filters' => $request->only(['search', 'priority', 'list_id'])]);
     }
 
     public function store(Request $request): RedirectResponse

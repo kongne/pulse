@@ -9,9 +9,11 @@ use App\Http\Controllers\ListController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\TaskExportController;
 use App\Http\Controllers\Teams\TeamInvitationController;
 use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Support\Facades\Route;
+use Spatie\LaravelPdf\Facades\Pdf;
 use Inertia\Inertia;
 
 /*
@@ -236,6 +238,28 @@ Route::middleware([
     Route::post('/lists/tasks', [TaskController::class, 'store'])->name('tasks.store');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Task export
+|--------------------------------------------------------------------------
+*/
+
+
+Route::get('/test-pdf', function () {
+    return Pdf::view('exports.test-pdf')
+        ->format('a4')
+        ->withBrowsershot(function ($browsershot) {
+            $browsershot
+                ->showBackground()
+                ->timeout(120);
+        })
+        ->download('browsershot-test.pdf');
+});
+
+
+
+Route::get('/tasks/export', [TaskExportController::class, 'export'])
+    ->name('tasks.export');
 /*
 |--------------------------------------------------------------------------
 | Settings

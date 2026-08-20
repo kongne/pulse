@@ -41,6 +41,7 @@ import { local as storageLocal } from '@/routes/storage';
 import { ref, computed } from 'vue';
 import { watchDebounced } from '@vueuse/core';
 import { Badge } from '@/components/ui/badge';
+import ExportDropdown from '@/components/ExportDropdown.vue';
 
 interface Task {
     id: number;
@@ -73,9 +74,12 @@ interface PaginationLink {
 interface PaginatedTasks {
     data: Task[];
     currrent_page: number;
+    first_page: string;
     last_page: string;
     per_page: number;
     total: number;
+    from: number;
+    to: number;
     links: PaginationLink[];
 }
 
@@ -235,6 +239,20 @@ const getPriorityVariant = (
         default:
             return 'default';
     }
+};
+
+const perPage = ref(props.filters.per_page ?? '');
+const changePerPage = () => {
+    router.get(
+        index.url(),
+        {
+            per_page: perPage.value,
+        },
+        {
+            preserveState: true,
+            preserveScroll: true,
+        },
+    );
 };
 </script>
 
@@ -599,11 +617,50 @@ const getPriorityVariant = (
 
         <Card>
             <CardHeader>
-                <CardTitle class="text-lg sm:text-xl">
-                    Tasks
-                    <span class="text-sm font-normal text-muted-foreground">
-                        ({{ tasks.data.length }} of {{ tasks.total }})
-                    </span>
+                <CardTitle
+                    class="flex flex-col gap-3 text-lg sm:flex-row sm:items-center sm:justify-between sm:text-xl"
+                >
+                    <!-- Title -->
+                    <div class="flex flex-wrap items-center gap-1">
+                        <span>Tasks</span>
+
+                        <span class="text-sm font-normal text-muted-foreground">
+                            ({{ tasks.data.length }} of {{ tasks.total }})
+                        </span>
+                    </div>
+
+                    <!-- Controls -->
+                    <div
+                        class="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center"
+                    >
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm whitespace-nowrap">
+                                Show
+                            </span>
+
+                            <select
+                                v-model="perPage"
+                                @change="changePerPage"
+                                class="h-9 rounded-md border border-input bg-background px-2 text-sm text-foreground focus:ring-2 focus:ring-ring focus:outline-none"
+                            >
+                                <option :value="5">5</option>
+                                <option :value="10">10</option>
+                                <option :value="15">15</option>
+                                <option :value="25">25</option>
+                                <option :value="50">50</option>
+                                <option :value="100">100</option>
+                            </select>
+
+                            <span class="text-sm whitespace-nowrap">
+                                entries
+                            </span>
+                        </div>
+
+                        <ExportDropdown
+                            url="/tasks/export"
+                            :filters="filters"
+                        />
+                    </div>
                 </CardTitle>
             </CardHeader>
 
@@ -881,9 +938,9 @@ const getPriorityVariant = (
 
                         <div class="flex flex-wrap items-center gap-1">
                             <Link
-                                v-for="link in tasks.links"
-                                :key="link.url || link.label"
-                                :href="link.url || '#'"
+                                v-for="(link, index) in tasks.links"
+                                :key="`${link.url ?? link.label}-${index}`"
+                                :href="link.url ?? '#'"
                                 :class="[
                                     'rounded-md px-2.5 py-1.5 text-xs sm:px-3 sm:text-sm',
                                     link.active
@@ -892,8 +949,8 @@ const getPriorityVariant = (
                                           ? 'hover:bg-muted'
                                           : 'cursor-not-allowed opacity-50',
                                 ]"
-                                :preserve-state="true"
-                                :preserve-scroll="true"
+                                preserve-state
+                                preserve-scroll
                                 v-html="link.label"
                             />
                         </div>
