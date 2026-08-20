@@ -24,6 +24,7 @@ class PdfExporter
         ])
             ->format('a4')
             ->portrait()
-            ->inline($definition->filename() . '.pdf');
+            ->download($definition->filename() . '.pdf');
     }
+    //use function inline($definition->filename(). '.pdf') for browser preview before downloading tasks on your own
 }
