@@ -244,20 +244,6 @@ Route::middleware([
 |--------------------------------------------------------------------------
 */
 
-
-Route::get('/test-pdf', function () {
-    return Pdf::view('exports.test-pdf')
-        ->format('a4')
-        ->withBrowsershot(function ($browsershot) {
-            $browsershot
-                ->showBackground()
-                ->timeout(120);
-        })
-        ->download('browsershot-test.pdf');
-});
-
-
-
 Route::get('/tasks/export', [TaskExportController::class, 'export'])
     ->name('tasks.export');
 /*
